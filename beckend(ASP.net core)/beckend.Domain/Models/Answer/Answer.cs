@@ -1,4 +1,4 @@
-﻿namespace beckend_ASP.net_core_.Models.Answer
+﻿namespace beckend.Domain.Models.Answer
 {
     public class Answer<T>
     {
@@ -10,7 +10,7 @@
         {
             get
             {
-                if(statusCode == 0)
+                if (statusCode == 0)
                 {
                     return 404;
                 }
@@ -24,10 +24,11 @@
                 statusCode = value;
             }
         }
-        public string Message {
+        public string Message
+        {
             get
             {
-                if(message == null || message == "")
+                if (message == null || message == "")
                 {
                     return "not description";
                 }
@@ -41,9 +42,10 @@
                 message = value;
             }
         }
-        public T Data {
+        public T Data
+        {
             get
-            { 
+            {
                 if (data == null)
                 {
                     throw new ArgumentNullException("data = null");

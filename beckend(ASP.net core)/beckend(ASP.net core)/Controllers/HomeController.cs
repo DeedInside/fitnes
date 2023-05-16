@@ -1,5 +1,5 @@
-﻿using beckend_ASP.net_core_.Models;
-using beckend_ASP.net_core_.Models.Answer;
+﻿using beckend.Domain.Models;
+using beckend.Domain.Models.Answer;
 using Microsoft.AspNetCore.Mvc;
 
 namespace beckend_ASP.net_core_.Controllers
@@ -8,8 +8,7 @@ namespace beckend_ASP.net_core_.Controllers
     //[Route("[controller]")]
     public class HomeController : Controller
     {
-        readonly User user = new(new Guid(), "123mail.ru", "+7-999-888-77-66", "first", "last", "123", DateTime.Now);
- 
+        readonly User user = new(new Guid(), "+7-999-888-77-66", "first", "last", "123", DateTime.Now);
         readonly Answer<int> answer = new()
         {
             StatusCode = 200,
@@ -31,10 +30,10 @@ namespace beckend_ASP.net_core_.Controllers
         }
         [HttpPut]
         [Route("putStatus")]
-        public JsonResult PutStatusCode(Answer<int> ans)
+        public JsonResult PutStatusCode(User answer)
         {
-
-            return new JsonResult("OK");
+            User user = answer;
+            return new JsonResult(user);
         }
 
 
