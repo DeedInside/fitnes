@@ -1,15 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using beckend.Domain.Models;
-using Microsoft.Extensions.Logging.Abstractions;
-using Microsoft.Extensions.Options;
+﻿using beckend.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace beckend.DALL.Repositories
+namespace beckend.DALL
 {
-    public class ApplicationContext: DbContext
+    public class ApplicationContext : DbContext
     {
         public DbSet<User> UsersContext { get; set; } = null!;
 
-        public ApplicationContext() 
+        public ApplicationContext()
         {
             Database.EnsureCreated();
         }
@@ -17,6 +15,7 @@ namespace beckend.DALL.Repositories
         {
             optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=fitnesDB;Username=postgres;Password=123");
         }
+
 
     }
 }

@@ -1,5 +1,4 @@
 ﻿using beckend.Domain.Models;
-using beckend.Domain.Models.Answer;
 using Microsoft.AspNetCore.Mvc;
 
 namespace beckend_ASP.net_core_.Controllers

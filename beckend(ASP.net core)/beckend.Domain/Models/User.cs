@@ -1,11 +1,21 @@
-﻿namespace beckend.Domain.Models
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace beckend.Domain.Models
 {
     public class User
     {
         private Guid id;
         private string phoneNumber = "";
+        [MaxLength(14)]
         private string firstName = "";
+        [MaxLength(14)]
         private string lastName = "";
+        [MaxLength(14)]
         private string password = "";
         private DateTime birthday = DateTime.Now;
         private string urlImage = "";
