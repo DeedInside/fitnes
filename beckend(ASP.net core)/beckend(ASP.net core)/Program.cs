@@ -1,9 +1,21 @@
 using beckend.DALL;
+using beckend.DALL.Interfasec;
+using beckend.DALL.Repositories;
+using beckend.Serivce.Implementations;
+using beckend.Serivce.Interfasec;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMvc();
+
+
+
+builder.Services.AddScoped<IUserRepository,UserRepository>();
+builder.Services.AddScoped<IUserService,UserService>();
+
+//string? Connection = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ApplicationContext>();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

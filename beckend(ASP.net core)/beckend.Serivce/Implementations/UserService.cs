@@ -1,11 +1,6 @@
 ﻿using beckend.DALL.Interfasec;
 using beckend.Domain.Models;
 using beckend.Serivce.Interfasec;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace beckend.Serivce.Implementations
 {
@@ -13,7 +8,7 @@ namespace beckend.Serivce.Implementations
     {
         private IUserRepository? userRepository;
 
-        UserService(IUserRepository? userRepository)
+        public UserService(IUserRepository? userRepository)
         {
             this.userRepository = userRepository;
         }
@@ -41,13 +36,23 @@ namespace beckend.Serivce.Implementations
 
         public async Task<Answer<User>> GetUserById(Guid id)
         {
-             var answer = new Answer<User>();
+            var answer = new Answer<User>();
 
             User user = await userRepository.GetUser(id);
-            answer.StatusCode = 200;
-            answer.Message = "Пользователь найден";
-            answer.Data = user;
-            return answer;
+            if (user != null)
+            {
+                answer.StatusCode = 200;
+                answer.Message = "Пользователь найден";
+                answer.Data = user;
+                return answer;
+            }
+            else
+            {
+                answer.StatusCode = 400;
+                answer.Message = "Пользователь не найден";
+                answer.Data = null;
+                return answer;
+            }
             
         }
     }

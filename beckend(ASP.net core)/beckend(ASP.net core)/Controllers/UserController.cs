@@ -7,25 +7,32 @@ namespace beckend_ASP.net_core_.Controllers
     public class UserController : Controller
     {
         private IUserService userService;
-        UserController(IUserService userService)
+        public UserController(IUserService userService)
         {
             this.userService = userService;
         }
 
         [Route("getUser")]
         [HttpGet]
-        public JsonResult getUser(Guid id)
+        public async Task<JsonResult> getUser(Guid id)
         {
-            var user = userService.GetUserById(id);
+            var user = await userService.GetUserById(id);
             return new JsonResult(user);
         }
 
         [HttpPost]
         [Route("addUser")]
-        public JsonResult addUser(User user)
+        public async Task<JsonResult> addUser(User user)
         {
-            var answer = userService.AddUser(user);
-            return new JsonResult(answer);
+            try
+            {
+                var answer = await userService.AddUser(user);
+                return new JsonResult(answer);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
        
     }

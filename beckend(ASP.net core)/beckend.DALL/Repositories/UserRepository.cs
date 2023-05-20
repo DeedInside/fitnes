@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace beckend.DALL.Repositories
 {
-    internal class UserRepository : IUserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly ApplicationContext _context;
         private int code = 200;
@@ -23,15 +23,15 @@ namespace beckend.DALL.Repositories
 
         public async Task<bool> AddUser(User user)
         {
-            try{ 
-                _context.UsersContext.Add(user);
+            try{
+                user.Birthday = DateTime.UtcNow;
+                _context.UsersContext.AddAsync(user);
                 await _context.SaveChangesAsync();
                 return true;
             }
             catch(Exception ex) 
             {
-
-                throw new NotImplementedException();
+                throw ex;
             }
         }
 
@@ -43,7 +43,7 @@ namespace beckend.DALL.Repositories
             }
             catch (Exception ex)
             {
-                throw new NotImplementedException();
+                throw ex;
             }
         }
 

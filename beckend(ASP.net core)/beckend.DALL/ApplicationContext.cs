@@ -5,9 +5,9 @@ namespace beckend.DALL
 {
     public class ApplicationContext : DbContext
     {
-        public DbSet<User> UsersContext { get; set; } = null!;
+        public DbSet<User> UsersContext { get; set; }
 
-        public ApplicationContext()
+        public ApplicationContext(DbContextOptions<ApplicationContext> option) : base(option)
         {
             Database.EnsureCreated();
         }
