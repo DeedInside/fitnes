@@ -1,4 +1,5 @@
 ﻿using beckend.Domain.Models;
+using beckend.Domain.Models.dto;
 
 namespace beckend.DALL.Interfasec
 {
@@ -8,12 +9,25 @@ namespace beckend.DALL.Interfasec
         /// </summary>
         /// <param name="id">type id: Guid</param>
         /// <returns>get record user</returns>
-        Task<User> GetUser(Guid id);
+        Task<UserDto> GetUser(Guid id);
+        /// <summary>
+        /// get full information in user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<UserFullDto> GetUserInfo(Guid id);
+        /// <summary>
+        /// Authenticate user
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="password"></param>
+        /// <returns>guid user</returns>
+        Task<Guid> AuthenticateUser(string name, string password);
         /// <summary>
         /// </summary>
         /// <param name="user"></param>
         /// <returns>get Answer(statys code)</returns>
-        Task<bool> AddUser(User user);
+        Task<Guid> AddUser(User user);
         /// <summary>
         /// 
         /// </summary>

@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace beckend_ASP.net_core_.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class UserController : Controller
     {
         private IUserService userService;
@@ -26,8 +28,16 @@ namespace beckend_ASP.net_core_.Controllers
         {
             try
             {
-                var answer = await userService.AddUser(user);
-                return new JsonResult(answer);
+                if (user.FirstName != null)
+                {
+
+                    var answer = await userService.AddUser(user);
+                    return new JsonResult(answer);
+                }
+                else
+                {
+                    return new JsonResult("error");
+                }
             }
             catch (Exception ex)
             {

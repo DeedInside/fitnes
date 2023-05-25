@@ -1,24 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+
 
 namespace beckend.Domain.Models
 {
     public class User
     {
+        [Key]
         private Guid id;
-        private string phoneNumber = "";
-        [MaxLength(14)]
-        private string firstName = "";
-        [MaxLength(14)]
-        private string lastName = "";
-        [MaxLength(14)]
-        private string password = "";
+        [Required(ErrorMessage ="Ошибка ввода телефона"), Phone]
+        private string? phoneNumber = null;
+        [Required(ErrorMessage = "ошибка ввода имени"), MaxLength(14)]
+        private string? firstName = null;
+        [Required(ErrorMessage ="Ошибка ввода фамилии") ,MaxLength(14)]
+        private string? lastName = null;
+        [Required(ErrorMessage ="ошибка ввода пароля"),MaxLength(14)]
+        private string? password = null;
+        [Required(ErrorMessage ="Ошибка даты рождения")]
         private DateTime birthday = DateTime.Now;
-        private string urlImage = "";
+        private string? urlImage = null;
 
         public User()
         {

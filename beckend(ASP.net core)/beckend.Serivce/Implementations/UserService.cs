@@ -1,5 +1,6 @@
 ﻿using beckend.DALL.Interfasec;
 using beckend.Domain.Models;
+using beckend.Domain.Models.dto;
 using beckend.Serivce.Interfasec;
 
 namespace beckend.Serivce.Implementations
@@ -34,11 +35,11 @@ namespace beckend.Serivce.Implementations
             }
         }
 
-        public async Task<Answer<User>> GetUserById(Guid id)
+        public async Task<Answer<UserDto>> GetUserById(Guid id)
         {
-            var answer = new Answer<User>();
+            var answer = new Answer<UserDto>();
+            var user = await userRepository.GetUser(id);
 
-            User user = await userRepository.GetUser(id);
             if (user != null)
             {
                 answer.StatusCode = 200;
