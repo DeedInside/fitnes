@@ -21,6 +21,13 @@ namespace beckend_ASP.net_core_.Controllers
             var user = await userService.GetUserById(id);
             return new JsonResult(user);
         }
+        [Route("getUserInfo")]
+        [HttpGet]
+        public async Task<JsonResult> getUserInfo(Guid id)
+        {
+            var user = await userService.GetUserFull(id);
+            return new JsonResult(user);
+        }
 
         [HttpPost]
         [Route("addUser")]
@@ -44,6 +51,13 @@ namespace beckend_ASP.net_core_.Controllers
                 throw ex;
             }
         }
-       
+        [Route("auteUser")]
+        [HttpGet]
+        public async Task<JsonResult> auteUser(string phone, string password)
+        {
+
+            var user = await userService.AuthenticateUser(phone, password); 
+            return new JsonResult(user);
+        }
     }
 }

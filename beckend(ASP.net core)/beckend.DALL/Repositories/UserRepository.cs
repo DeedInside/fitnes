@@ -25,6 +25,7 @@ namespace beckend.DALL.Repositories
                         Guid NewId = Guid.NewGuid() ;
                         user.Birthday = DateTime.SpecifyKind(user.Birthday, DateTimeKind.Utc);
                         //user.Birthday = DateTime.Parse(user.Birthday);
+                        //user.Birthday = DateTime.UtcNow;
                         var validNumber = await content.UsersContext.FirstOrDefaultAsync(q => q.PhoneNumber == user.PhoneNumber);
                         if (validNumber == null){
                             User rezult = new User()
@@ -34,7 +35,8 @@ namespace beckend.DALL.Repositories
                                 LastName = user.LastName,
                                 Password = user.Password,
                                 PhoneNumber = user.PhoneNumber,
-                                UrlImage = user.UrlImage
+                                UrlImage = user.UrlImage,
+                                Birthday = user.Birthday
                             };
                             await content.UsersContext.AddAsync(rezult);
                             await content.SaveChangesAsync();
@@ -57,9 +59,27 @@ namespace beckend.DALL.Repositories
             }
         }
 
-        public Task<Guid> AuthenticateUser(string name, string password)
+        public async Task<Guid> AuthenticateUser(string phone, string password)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var content = _context)
+                {
+                    var rezult = await content.UsersContext.FirstOrDefaultAsync(q => q.PhoneNumber == phone);
+                    if(rezult.Password == password)
+                    {
+                        return rezult.Id;
+                    }
+                    else
+                    {
+                        throw new Exception("Пароли не совпадают");
+                    }
+                }
+            }
+            catch(Exception ex) 
+            {
+                throw ex;
+            }
         }
 
         public async Task<UserDto> GetUser(Guid id)

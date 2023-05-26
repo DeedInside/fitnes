@@ -22,7 +22,7 @@ namespace beckend.DALL.Interfasec
         /// <param name="name"></param>
         /// <param name="password"></param>
         /// <returns>guid user</returns>
-        Task<Guid> AuthenticateUser(string name, string password);
+        Task<Guid> AuthenticateUser(string phone, string password);
         /// <summary>
         /// </summary>
         /// <param name="user"></param>

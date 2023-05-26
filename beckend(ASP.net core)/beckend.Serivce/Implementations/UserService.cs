@@ -14,24 +14,51 @@ namespace beckend.Serivce.Implementations
             this.userRepository = userRepository;
         }
 
-        public async Task<Answer<bool>> AddUser(User user)
+        public async Task<Answer<Guid>> AddUser(User user)
         {
-            var answer = new Answer<bool>();
+            var answer = new Answer<Guid>();
 
             if (user != null)
             {
-                await userRepository.AddUser(user);
+                Guid id = await userRepository.AddUser(user);
                 answer.StatusCode = 200;
                 answer.Message = "Пользователь успешно добавлен";
-                answer.Data = true;
+                answer.Data = id;
                 return  answer;
             }
             else
             {
                 answer.StatusCode = 400;
                 answer.Message = "ошибка добавления пользователя";
-                answer.Data = false;
+                answer.Data = new Guid();
                 return answer;
+            }
+        }
+
+        public async Task<Answer<Guid>> AuthenticateUser(string phone, string password)
+        {
+            var answer = new Answer<Guid>();
+            if (phone != null && password != null)
+            {
+                var rez = await userRepository.AuthenticateUser(phone, password);
+                if (rez != Guid.Empty)
+                {
+                    answer.StatusCode = 200;
+                    answer.Message = "авторизация успешна";
+                    answer.Data = rez;
+                    return answer;
+                }
+                else
+                {
+                    answer.StatusCode = 400;
+                    answer.Message = "авторизация не удалась";
+                    answer.Data = rez;
+                    return answer;
+                }
+            }
+            else
+            {
+                throw new NotImplementedException();
             }
         }
 
@@ -55,6 +82,27 @@ namespace beckend.Serivce.Implementations
                 return answer;
             }
             
+        }
+
+        public async Task<Answer<UserFullDto>> GetUserFull(Guid id)
+        {
+            var answer = new Answer<UserFullDto>();
+            var user = await userRepository.GetUserInfo(id);
+
+            if (user != null)
+            {
+                answer.StatusCode = 200;
+                answer.Message = "Пользователь найден";
+                answer.Data = user;
+                return answer;
+            }
+            else
+            {
+                answer.StatusCode = 400;
+                answer.Message = "Пользователь не найден";
+                answer.Data = null;
+                return answer;
+            }
         }
     }
 }
