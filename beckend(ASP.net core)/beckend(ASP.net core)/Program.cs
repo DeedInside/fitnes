@@ -3,7 +3,6 @@ using beckend.DALL.Interfasec;
 using beckend.DALL.Repositories;
 using beckend.Serivce.Implementations;
 using beckend.Serivce.Interfasec;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 

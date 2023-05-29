@@ -18,16 +18,19 @@ namespace beckend.DALL.Repositories
 
         public async Task<Guid> AddUser(UserRegisterDto user)
         {
-            try {
-                using (var content = _context) {
+            try
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                {
                     if (user != null)
                     {
-                        Guid NewId = Guid.NewGuid() ;
+                        Guid NewId = Guid.NewGuid();
                         user.Birthday = DateTime.SpecifyKind(user.Birthday, DateTimeKind.Utc);
                         //user.Birthday = DateTime.Parse(user.Birthday);
                         //user.Birthday = DateTime.UtcNow;
-                        var validNumber = await content.UsersContext.FirstOrDefaultAsync(q => q.PhoneNumber == user.PhoneNumber);
-                        if (validNumber == null){
+                        var validNumber = await db.UsersContext.FirstOrDefaultAsync(q => q.PhoneNumber == user.PhoneNumber);
+                        if (validNumber == null)
+                        {
                             User rezult = new User()
                             {
                                 Id = NewId,
@@ -38,8 +41,8 @@ namespace beckend.DALL.Repositories
                                 UrlImage = user.UrlImage,
                                 Birthday = user.Birthday
                             };
-                            await content.UsersContext.AddAsync(rezult);
-                            await content.SaveChangesAsync();
+                            await db.UsersContext.AddAsync(rezult);
+                            await db.SaveChangesAsync();
                             return NewId;
                         }
                         else
@@ -84,12 +87,12 @@ namespace beckend.DALL.Repositories
 
         public async Task<UserDto> GetUser(Guid id)
         {
-            using (var content = _context)
+            using (ApplicationContext db = new ApplicationContext())
             {
                 UserDto rezult = new UserDto();
                 try
                 {
-                    var user = await content.UsersContext.FirstOrDefaultAsync(q => q.Id == id);
+                    var user = await db.UsersContext.FirstOrDefaultAsync(q => q.Id == id);
                     if (user != null)
                     {
                         rezult.FirstName = user.FirstName;
@@ -114,10 +117,10 @@ namespace beckend.DALL.Repositories
             try
             {
 
-                using (var content = _context)
+                using (ApplicationContext db = new ApplicationContext())
                 {
                     UserFullDto rezult = new UserFullDto();
-                    var user = await content.UsersContext.FirstOrDefaultAsync(q => q.Id == id);
+                    var user = await db.UsersContext.FirstOrDefaultAsync(q => q.Id == id);
                     if (user != null)
                     {
                         rezult.Id = user.Id;
@@ -144,9 +147,9 @@ namespace beckend.DALL.Repositories
         {
             try
             {
-                using(var content = _context)
+                using(ApplicationContext db = new ApplicationContext())
                 {
-                    var userCurret = await content.UsersContext.FirstOrDefaultAsync(q => q.Id == user.Id);
+                    var userCurret = await db.UsersContext.FirstOrDefaultAsync(q => q.Id == user.Id);
                     if (user != null)
                     {
                         if(user.FirstName != userCurret.FirstName && user.FirstName != null)
@@ -155,7 +158,7 @@ namespace beckend.DALL.Repositories
                         }
                         if(user.LastName != userCurret.LastName && user.LastName != null)
                         {
-                            userCurret.FirstName = user.LastName;
+                            userCurret.LastName = user.LastName;
                         }
                         if(user.Password != userCurret.Password && user.Password != null)
                         {
@@ -170,8 +173,8 @@ namespace beckend.DALL.Repositories
                         {
                             //userCurret.Birthday = user.Birthday;
                         }
-                        content.UsersContext.Update(userCurret);
-                        await content.SaveChangesAsync();
+                        db.UsersContext.Update(userCurret);
+                        await db.SaveChangesAsync();
                         return true;
                     }
                     else
