@@ -1,5 +1,5 @@
 ﻿using beckend.Domain.Models;
-using beckend.Domain.Models.dto;
+using beckend.Domain.Models.dto.User;
 
 namespace beckend.DALL.Interfasec
 {
@@ -27,7 +27,7 @@ namespace beckend.DALL.Interfasec
         /// </summary>
         /// <param name="user"></param>
         /// <returns>get Answer(statys code)</returns>
-        Task<Guid> AddUser(User user);
+        Task<Guid> AddUser(UserRegisterDto user);
         /// <summary>
         /// 
         /// </summary>

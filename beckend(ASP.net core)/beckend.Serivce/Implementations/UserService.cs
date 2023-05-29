@@ -1,6 +1,7 @@
-﻿using beckend.DALL.Interfasec;
+﻿using beckend.DALL;
+using beckend.DALL.Interfasec;
 using beckend.Domain.Models;
-using beckend.Domain.Models.dto;
+using beckend.Domain.Models.dto.User;
 using beckend.Serivce.Interfasec;
 
 namespace beckend.Serivce.Implementations
@@ -14,7 +15,7 @@ namespace beckend.Serivce.Implementations
             this.userRepository = userRepository;
         }
 
-        public async Task<Answer<Guid>> AddUser(User user)
+        public async Task<Answer<Guid>> AddUser(UserRegisterDto user)
         {
             var answer = new Answer<Guid>();
 
@@ -101,6 +102,26 @@ namespace beckend.Serivce.Implementations
                 answer.StatusCode = 400;
                 answer.Message = "Пользователь не найден";
                 answer.Data = null;
+                return answer;
+            }
+        }
+
+        public async Task<Answer<bool>> UserUpdate(User user)
+        {
+            var answer = new Answer<bool>();
+            var userNew = await userRepository.UpdateUser(user);
+            if (user != null)
+            {
+                answer.StatusCode = 200;
+                answer.Message = "изменения прошли успешно";
+                answer.Data = true;
+                return answer;
+            }
+            else
+            {
+                answer.StatusCode = 400;
+                answer.Message = "ошибка внесения изменений";
+                answer.Data = false;
                 return answer;
             }
         }

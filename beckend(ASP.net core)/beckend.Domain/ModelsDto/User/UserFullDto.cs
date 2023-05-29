@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace beckend.Domain.Models.dto
+namespace beckend.Domain.Models.dto.User
 {
     public class UserFullDto
     {

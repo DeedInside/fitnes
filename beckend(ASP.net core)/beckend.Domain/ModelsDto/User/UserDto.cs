@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-namespace beckend.Domain.Models.dto
+
+namespace beckend.Domain.Models.dto.User
 {
     public class UserDto
     {

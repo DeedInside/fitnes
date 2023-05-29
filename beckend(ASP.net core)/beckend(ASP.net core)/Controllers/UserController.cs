@@ -1,6 +1,7 @@
 ﻿using beckend.Domain.Models;
 using beckend.Serivce.Interfasec;
 using Microsoft.AspNetCore.Mvc;
+using beckend.Domain.Models.dto.User;
 
 namespace beckend_ASP.net_core_.Controllers
 {
@@ -14,24 +15,35 @@ namespace beckend_ASP.net_core_.Controllers
             this.userService = userService;
         }
 
-        [Route("getUser")]
-        [HttpGet]
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Возвращает имя и фамилию пользователя</returns>
+        [HttpGet, Route("getUser")]
         public async Task<JsonResult> getUser(Guid id)
         {
             var user = await userService.GetUserById(id);
             return new JsonResult(user);
         }
-        [Route("getUserInfo")]
-        [HttpGet]
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Возвращает фул информацию о пользователе</returns>
+        [HttpGet, Route("getUserInfo")]
         public async Task<JsonResult> getUserInfo(Guid id)
         {
             var user = await userService.GetUserFull(id);
             return new JsonResult(user);
         }
-
-        [HttpPost]
-        [Route("addUser")]
-        public async Task<JsonResult> addUser(User user)
+        /// <summary>
+        /// Создание нового пользователя
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        [HttpPost, Route("addUser")]
+        public async Task<JsonResult> addUser(UserRegisterDto user)
         {
             try
             {
@@ -51,13 +63,28 @@ namespace beckend_ASP.net_core_.Controllers
                 throw ex;
             }
         }
-        [Route("auteUser")]
-        [HttpGet]
+        /// <summary>
+        /// Авторизация пользователя
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <param name="password"></param>
+        /// <returns>Возвращает guid пользователя</returns>
+        [HttpGet, Route("auteUser")]
         public async Task<JsonResult> auteUser(string phone, string password)
         {
-
-            var user = await userService.AuthenticateUser(phone, password); 
-            return new JsonResult(user);
+            var userGuid = await userService.AuthenticateUser(phone, password); 
+            return new JsonResult(userGuid);
+        }
+        /// <summary>
+        /// обновление информации о пользователе
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>Возвроащает успех или неудачу обновления данных</returns>
+        [HttpPut, Route("UpdateUser")]
+        public async Task<JsonResult> UpdateUser(User user)
+        {
+            var answer = await userService.UserUpdate(user);
+            return new JsonResult(answer); 
         }
     }
 }

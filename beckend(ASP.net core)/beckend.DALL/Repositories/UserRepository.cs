@@ -1,6 +1,6 @@
 ﻿using beckend.DALL.Interfasec;
 using beckend.Domain.Models;
-using beckend.Domain.Models.dto;
+using beckend.Domain.Models.dto.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace beckend.DALL.Repositories
@@ -16,7 +16,7 @@ namespace beckend.DALL.Repositories
             _context = context;
         }
 
-        public async Task<Guid> AddUser(User user)
+        public async Task<Guid> AddUser(UserRegisterDto user)
         {
             try {
                 using (var content = _context) {
@@ -140,9 +140,50 @@ namespace beckend.DALL.Repositories
             }
         }
 
-        public Task<bool> UpdateUser(User user)
+        public async Task<bool> UpdateUser(User? user)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using(var content = _context)
+                {
+                    var userCurret = await content.UsersContext.FirstOrDefaultAsync(q => q.Id == user.Id);
+                    if (user != null)
+                    {
+                        if(user.FirstName != userCurret.FirstName && user.FirstName != null)
+                        {
+                            userCurret.FirstName = user.FirstName;
+                        }
+                        if(user.LastName != userCurret.LastName && user.LastName != null)
+                        {
+                            userCurret.FirstName = user.LastName;
+                        }
+                        if(user.Password != userCurret.Password && user.Password != null)
+                        {
+                            userCurret.Password = user.Password;
+                        }
+                        if(user.PhoneNumber != userCurret.PhoneNumber && user.PhoneNumber != null)
+                        {
+                           userCurret.PhoneNumber = user.PhoneNumber;
+                        }
+                        // сделать проверку на отсутствие времени
+                        if(user.Birthday != userCurret.Birthday)
+                        {
+                            //userCurret.Birthday = user.Birthday;
+                        }
+                        content.UsersContext.Update(userCurret);
+                        await content.SaveChangesAsync();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
