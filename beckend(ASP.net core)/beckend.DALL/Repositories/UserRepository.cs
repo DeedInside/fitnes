@@ -8,83 +8,136 @@ namespace beckend.DALL.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly ApplicationContext _context;
-        private int code = 200;
-        private string mes = "операция выполненна успешно";
-
         public UserRepository(ApplicationContext context)
         {
             _context = context;
         }
-
-        public async Task<Guid> AddUser(UserRegisterDto user)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>Возвращает Guid пользователя, в случае неудачи возвращает нулевой Guid</returns>
+        public async Task<Guid> AddUser(UserRegisterDto? user)
         {
             try
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    if (user != null)
+                    var validNumber = await db.UsersContext.FirstOrDefaultAsync(q => q.PhoneNumber == user.PhoneNumber);
+
+                    if (user != null && validNumber == null)
                     {
-                        Guid NewId = Guid.NewGuid();
-                        user.Birthday = DateTime.SpecifyKind(user.Birthday, DateTimeKind.Utc);
-                        //user.Birthday = DateTime.Parse(user.Birthday);
-                        //user.Birthday = DateTime.UtcNow;
-                        var validNumber = await db.UsersContext.FirstOrDefaultAsync(q => q.PhoneNumber == user.PhoneNumber);
-                        if (validNumber == null)
+                        User rezult = new User();
+                        if (user.FirstName != null)
                         {
-                            User rezult = new User()
-                            {
-                                Id = NewId,
-                                FirstName = user.FirstName,
-                                LastName = user.LastName,
-                                Password = user.Password,
-                                PhoneNumber = user.PhoneNumber,
-                                UrlImage = user.UrlImage,
-                                Birthday = user.Birthday
-                            };
-                            await db.UsersContext.AddAsync(rezult);
-                            await db.SaveChangesAsync();
-                            return NewId;
+                            rezult.FirstName = user.FirstName;
                         }
                         else
                         {
-                            throw new Exception("пользователь существует");
+                            return new Guid();
                         }
+                        if (user.LastName != null)
+                        {
+                            rezult.LastName = user.LastName;
+                        }
+                        else
+                        {
+                            return new Guid();
+                        }
+                        if (user.Password != null)
+                        {
+                            rezult.Password = user.Password;
+                        }
+                        else
+                        {
+                            return new Guid();
+                        }
+                        if (user.PhoneNumber != null)
+                        {
+                            rezult.PhoneNumber = user.PhoneNumber;
+                        }
+                        else
+                        {
+                            return new Guid();
+                        }
+                        // не верно сравнение пустого объекта 
+                        if (user.Birthday != new DateTime())
+                        {
+                            rezult.Birthday = DateTime.SpecifyKind(user.Birthday, DateTimeKind.Utc);
+                        }
+                        else
+                        {
+                            return new Guid();
+                        }
+                        if (user.UrlImage != null)
+                        {
+                            rezult.UrlImage = user.UrlImage;
+                        }
+                        else
+                        {
+                            rezult.UrlImage = null;
+                        }
+
+                        rezult.Id = Guid.NewGuid();
+                        await db.UsersContext.AddAsync(rezult);
+                        await db.SaveChangesAsync();
+                        return rezult.Id;
                     }
                     else
                     {
-                        throw new Exception("нет данных пользователя");
+                        throw new Exception("Пользователь с таким телефоном существет");
                     }
                 }
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception(ex.Message);
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <param name="password"></param>
+        /// <returns>Возвращает Guid пользователя в противном случае возвращает exeption</returns>
+        /// <exception cref="Exception"></exception>
         public async Task<Guid> AuthenticateUser(string phone, string password)
         {
             try
             {
-                using (var content = _context)
+                string num = phone;
+                using (ApplicationContext db = new ApplicationContext())
                 {
-                    var rezult = await content.UsersContext.FirstOrDefaultAsync(q => q.PhoneNumber == phone);
-                    if(rezult.Password == password)
+                    var test = await db.UsersContext.FirstOrDefaultAsync(q => q.PhoneNumber != null);
+                    var rezult = await db.UsersContext.FirstOrDefaultAsync(q => q.PhoneNumber == num);
+                    if(rezult != null)
                     {
-                        return rezult.Id;
+                        if (rezult.Password == password)
+                        {
+                            return rezult.Id;
+                        }
+                        else
+                        {
+                            throw new Exception("Пароли не совпадают");
+                        }
                     }
                     else
                     {
-                        throw new Exception("Пароли не совпадают");
+                        throw new Exception("Пользователь не найден");
                     }
                 }
             }
             catch(Exception ex) 
             {
-                throw ex;
+                throw new Exception(ex.Message);
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Возвращает информацию о пользователе в противном случае null</returns>
+        /// <exception cref="Exception"></exception>
         public async Task<UserDto> GetUser(Guid id)
         {
             using (ApplicationContext db = new ApplicationContext())
@@ -107,16 +160,20 @@ namespace beckend.DALL.Repositories
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    throw new Exception(ex.Message);
                 }
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Возвращает фул информацию о пользователе, в противном случае null</returns>
+        /// <exception cref="Exception"></exception>
         public async Task<UserFullDto> GetUserInfo(Guid id)
         {
             try
             {
-
                 using (ApplicationContext db = new ApplicationContext())
                 {
                     UserFullDto rezult = new UserFullDto();
@@ -139,10 +196,15 @@ namespace beckend.DALL.Repositories
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception(ex.Message);
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<bool> UpdateUser(User? user)
         {
             try
@@ -185,7 +247,7 @@ namespace beckend.DALL.Repositories
             }
             catch(Exception ex)
             {
-                throw ex;
+                throw new Exception(ex.Message);
             }
         }
     }
