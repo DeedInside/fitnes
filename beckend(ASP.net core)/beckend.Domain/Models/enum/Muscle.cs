@@ -9,8 +9,17 @@
     }
     public enum groupExercises
     {
+        /// <summary>
+        /// соревновательный
+        /// </summary>
         competitive = 1,
+        /// <summary>
+        /// подготовительный
+        /// </summary>
         preparatory = 2,
+        /// <summary>
+        /// Дополнительный
+        /// </summary>
         general = 3
     }
     

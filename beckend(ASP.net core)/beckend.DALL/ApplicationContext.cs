@@ -1,4 +1,5 @@
 ﻿using beckend.Domain.Models;
+using beckend.Domain.Models.Exercises;
 using Microsoft.EntityFrameworkCore;
 
 namespace beckend.DALL
@@ -6,6 +7,7 @@ namespace beckend.DALL
     public class ApplicationContext : DbContext
     {
         public DbSet<User> UsersContext { get; set; }
+        //public DbSet<Exercise> ExercisesBd { get; set; }
 
         public ApplicationContext()
         {

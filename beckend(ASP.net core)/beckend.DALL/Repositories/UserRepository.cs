@@ -108,7 +108,7 @@ namespace beckend.DALL.Repositories
                 string num = phone;
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    var test = await db.UsersContext.FirstOrDefaultAsync(q => q.PhoneNumber != null);
+                    //var test = await db.UsersContext.FirstOrDefaultAsync(q => q.PhoneNumber != null);
                     var rezult = await db.UsersContext.FirstOrDefaultAsync(q => q.PhoneNumber == num);
                     if(rezult != null)
                     {

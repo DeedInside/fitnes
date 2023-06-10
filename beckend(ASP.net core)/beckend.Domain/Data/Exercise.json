@@ -1,0 +1,56 @@
+[
+  {
+    "additionalGroupMuscle": [ 1, 0 ],
+    "description": "Test description",
+    "groupExercises": 1,
+    "groupMuscle": 0,
+    "Id": 1,
+    "name": "Test",
+    "shortName": "ShortTest"
+  },
+  {
+    "Id": 1,
+    "shortName": "ShortTest",
+    "name": "Test",
+    "description": "Test description",
+    "groupMuscle": 0,
+    "groupExercises": 1,
+    "additionalGroupMuscle": [ 1, 0 ]
+  },
+  {
+    "Id": 1,
+    "shortName": "ShortTest",
+    "name": "Test",
+    "description": "Test description",
+    "groupMuscle": 0,
+    "groupExercises": 1,
+    "additionalGroupMuscle": [
+      1,
+      0
+    ]
+  },
+  {
+    "Id": 1,
+    "shortName": "ShortTest",
+    "name": "Test",
+    "description": "Test description",
+    "groupMuscle": 0,
+    "groupExercises": 1,
+    "additionalGroupMuscle": [
+      1,
+      0
+    ]
+  },
+  {
+    "Id": 1,
+    "shortName": "ShortTest",
+    "name": "Test",
+    "description": "Test description",
+    "groupMuscle": 0,
+    "groupExercises": 1,
+    "additionalGroupMuscle": [
+      1,
+      0
+    ]
+  }
+]

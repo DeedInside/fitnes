@@ -10,20 +10,20 @@ namespace beckend.Domain.Models.Exercises
         public groupMuscle groupMuscle { get; set; }
         public groupExercises groupExercises { get; set; }
         public List<groupMuscle> additionalGroupMuscle { get; set; }
-
-
-        public static void print(Exercise ex)
+        public static string print(Exercise ex)
         {
-            Console.WriteLine($"Id = {ex.Id}");
-            Console.WriteLine($"Short name = {ex.shortName}");
-            Console.WriteLine($"Name = {ex.name}");
-            Console.WriteLine($"Description = {ex.description}");
-            Console.WriteLine($"Group muscle = {ex.groupMuscle}");
-            Console.WriteLine($"Group Exercises = {ex.groupExercises} {(int)ex.groupExercises}");
+            string ret = $"Id = {ex.Id}\n" +
+                $"Short name = {ex.shortName}\n" +
+                $"Name = {ex.name}\n" +
+                $"Description = {ex.description}\n" +
+                $"Group muscle = {ex.groupMuscle} \n"+
+                $"Group Exercises = {ex.groupExercises} {(int)ex.groupExercises}\n";
+            
             foreach(var item in ex.additionalGroupMuscle)
             {
-                Console.WriteLine($"\tadditional group = {item}");
+                ret += $"\tadditional group = {item}\n";
             }
+            return ret;
         }
     }
 }

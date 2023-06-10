@@ -1,6 +1,8 @@
 ﻿using beckend.Domain.Models.Exercises;
 using beckend.Domain.Models.@enum;
 using System.Text.Json;
+using beckend.Domain.Models;
+using System.Diagnostics;
 
 public class Program
 {
@@ -23,12 +25,30 @@ public class Program
         };
         listEx.Add(exercise);
         listEx.Add(exercise);
-        using (FileStream fs = new FileStream("Exercise.json", FileMode.OpenOrCreate))
+
+
+        string stringConnect = "C:\\Users\\loy4f\\OneDrive\\Рабочий стол\\fitnes\\beckend(ASP.net core)\\beckend.Domain\\Data\\Exercise.json";
+
+        string filePath = System.IO.Path.GetFullPath("Exercise.json");
+
+        var options = new JsonSerializerOptions
         {
-            JsonSerializer.Serialize<List<Exercise>>(fs, listEx);
-            Console.WriteLine("complite");
+            WriteIndented = true
+        };
+
+        using (FileStream fs = new FileStream(stringConnect, FileMode.OpenOrCreate))
+        {
+            var notJson = JsonSerializer.Deserialize<List<Exercise>>(fs);
+            File.WriteAllText(stringConnect, string.Empty);
+            notJson.Add(exercise);
+            //StreamWriter sw = new StreamWriter(fs);
+
+            JsonSerializer.Serialize<List<Exercise>>(fs, notJson, options);
+            
+            Console.WriteLine("complite, path: " + stringConnect);
         }
-        using (FileStream fs = new FileStream("Exercise.json", FileMode.Open))
+        
+        using (FileStream fs = new FileStream(stringConnect, FileMode.Open))
         {
             var notJson = JsonSerializer.Deserialize<List<Exercise>>(fs);
             foreach (var item in notJson)
@@ -37,7 +57,7 @@ public class Program
                 {
                     Console.WriteLine($"find object {item.additionalGroupMuscle[0]}");
                 }
-                Exercise.print(item);
+                Console.WriteLine(Exercise.print(item));
 
             }
         }
