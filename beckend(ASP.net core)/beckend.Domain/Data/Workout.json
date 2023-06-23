@@ -1,0 +1,38 @@
+{
+  "Id": 1,
+  "MainWork": 1,
+  "Description": "description",
+  "Exercise": [
+    1,
+    2
+  ],
+  "PersonalExercise": [
+    {
+      "Id": 1,
+      "shortName": "ShortName",
+      "name": "Name",
+      "description": "description",
+      "groupMuscle": 1,
+      "groupExercises": 1,
+      "additionalGroupMuscle": [],
+      "Weight": 100,
+      "Repetitions": 10,
+      "Approaches": 5
+    },
+    {
+      "Id": 2,
+      "shortName": "ShortName2",
+      "name": "Name2",
+      "description": "description2",
+      "groupMuscle": 1,
+      "groupExercises": 1,
+      "additionalGroupMuscle": [
+        1,
+        2
+      ],
+      "Weight": 200,
+      "Repetitions": 20,
+      "Approaches": 50
+    }
+  ]
+}

@@ -1,12 +1,17 @@
 ﻿namespace beckend.Domain.Models.@enum
 {
-
+    /// <summary>
+    /// прорабатываемые группы мышц
+    /// </summary>
     public enum groupMuscle
     {
         legs,
         back,
         hands
     }
+    /// <summary>
+    /// вид использования упражнения
+    /// </summary>
     public enum groupExercises
     {
         /// <summary>

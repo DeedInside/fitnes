@@ -7,7 +7,22 @@ namespace beckend.DALL
     public class ApplicationContext : DbContext
     {
         public DbSet<User> UsersContext { get; set; }
-        //public DbSet<Exercise> ExercisesBd { get; set; }
+        /// <summary>
+        /// таблица упражнений
+        /// </summary>
+        public DbSet<Exercise> ExercisesDb { get; set; }
+        /// <summary>
+        /// таблица упражнений с нагрузкой
+        /// </summary>
+        public DbSet<PersonalExercise> PersonalExercisesDb { get; set; }
+        /// <summary>
+        /// тренировочный день
+        /// </summary>
+        public DbSet<Workout> workoutsDb { get; set; }
+        /// <summary>
+        /// комплекс тренировок
+        /// </summary>
+        public DbSet<SetWorckout> setWorckoutsDb { get; set; }
 
         public ApplicationContext()
         {

@@ -1,20 +1,9 @@
 ﻿using beckend.Domain.Models.Exercises;
 
-namespace beckend.DALL.Interfasec
+namespace beckend.DALL.Interfasec.Worckout
 {
-    public interface IExerciseRepository
+    public interface IExerciseRepository : IBaseRepository<Exercise>
     {
-        /// <summary>
-        /// Возвращает все упражнения
-        /// </summary>
-        /// <returns></returns>
-        Task<IEnumerable<Exercise>> GetAll();
-        /// <summary>
-        /// возвращает упражнение по id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        Task<Exercise> GetById(int id);
         /// <summary>
         /// Возвращает упражнение по названию
         /// </summary>
@@ -33,6 +22,6 @@ namespace beckend.DALL.Interfasec
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <returns></returns>
-        Task<IEnumerable<Exercise>> GetRange(int start,int end);
+        Task<IEnumerable<Exercise>> GetRange(int start, int end);
     }
 }

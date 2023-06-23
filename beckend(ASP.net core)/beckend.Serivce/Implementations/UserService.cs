@@ -1,5 +1,4 @@
-﻿using beckend.DALL;
-using beckend.DALL.Interfasec;
+﻿using beckend.DALL.Interfasec;
 using beckend.Domain.Models;
 using beckend.Domain.Models.dto.User;
 using beckend.Serivce.Interfasec;
